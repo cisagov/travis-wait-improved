@@ -32,7 +32,7 @@ setup(
     name="travis-wait-improved",
     # Versions should comply with PEP440
     version=package_vars("src/travis_wait_improved/_version.py")["__version__"],
-    description="A tool to help long-running, yet reticent, processes avoid dead at the hands of Traivs-CI.",
+    description="A tool to help long-running, yet reticent, processes avoid death at the hands of Traivs-CI.",
     long_description=readme(),
     long_description_content_type="text/markdown",
     # NCATS "homepage"
