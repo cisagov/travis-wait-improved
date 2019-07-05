@@ -1,72 +1,104 @@
-#!/usr/bin/env python3
-"""Helper script to work around stdout timout of Travis-CI.
+#!/usr/bin/env python
+
+"""Helper tool to work around stdout timout of Travis-CI.
 
 If a long-running process does not output anything for 10 minutes
-Travis will assume it has hung, and kill it.  Some tools (like Packer)
+Travis will assume it has stalled, and kill it.  Some tools (like Packer)
 can easily go beyond this 10 minute mark without writing to stdout.
 
-By default it will allow the child to run up to 20 minutes.  This value
-can be changed by setting the SHERPA_TIMEOUT environment variable.
+Usage:
+  travis_wait_improved [--timeout=<mins>] <command>...
+  travis_wait_improved (-h | --help)
+
+Options:
+  -h --help             Show this message.
+  -t --timeout=<mins>   Maximum time process will be allowed to run
+                        in minutes [default: 20].
 """
 
 from datetime import datetime, timedelta
-import os
+from enum import Enum, auto
 import subprocess  # nosec
 import sys
 
+import docopt
+from termcolor import colored
 
-class bcolor:
-    """Define ANSI colors."""
+from ._version import __version__
 
-    HEADER = "\033[95m"
-    OKBLUE = "\033[94m"
-    OKGREEN = "\033[92m"
-    WARNING = "\033[93m"
-    FAIL = "\033[91m"
-    ENDC = "\033[0m"
-    BOLD = "\033[1m"
-    UNDERLINE = "\033[4m"
+HEADER = colored("Travis-wait ❱", "magenta", attrs=["bold"])
 
 
-def sherprint(message, color=bcolor.OKGREEN):
-    """Print a sherpa message."""
-    print(f"{bcolor.HEADER}Sherpa ❱ {color}{message}{bcolor.ENDC}", flush=True)
+class Severity(Enum):
+    """Used to select the formatting of messages."""
+
+    GOOD = auto()
+    WARNING = auto()
+    FAIL = auto()
+
+
+def cprint(message, severity=None):
+    """Print a formatted message and flush."""
+    if severity == Severity.GOOD:
+        message = colored(f"{message}", "green", attrs=["bold"])
+    elif severity == Severity.WARNING:
+        message = colored(f"{message}", "yellow")
+    elif severity == Severity.FAIL:
+        message = colored(f"{message}", "red", attrs=["bold"])
+    print(HEADER, message, flush=True)
 
 
 def main():
     """Start a child process, output status, and monitor exit."""
-    command = " ".join(sys.argv[1:])
-    timeout = timedelta(minutes=int(os.getenv("SHERPA_TIMEOUT", 20)))
+    args = docopt.docopt(__doc__, version=__version__)
+    command = " ".join(args["<command>"])
+    timeout = timedelta(minutes=int(args["--timeout"]))
+
+    # Calculate the time at which we will kill the child process.
     now = datetime.utcnow()
     killtime = now + timeout
-    sherprint(f"{command}")
-    sherprint(f"max runtime {timeout}")
-    sherprint(f"will kill at {killtime}")
 
+    # Log some startup information for the user.
+    cprint(f"Running: {command}")
+    cprint(f"Max runtime {timeout}")
+    cprint(f"Will kill at {killtime} UTC")
+
+    # Start the child process.
     child = subprocess.Popen(command, shell=True)  # nosec
+
+    # Loop until it is time to kill the child process.
     while now < killtime:
-        sherprint(f"{(killtime - now)} remaining", color=bcolor.WARNING)
+        # Log how much time is remaining.
+        cprint(f"{(killtime - now)} remaining", severity=Severity.WARNING)
         try:
+            # Calculate how long we should sleep.
+            # Wake up at kill time if it is soon.
             sleep_time = min(60, (killtime - now).total_seconds())
+            # Sleep while waiting for the child to exit.
             return_code = child.wait(sleep_time)
             if return_code is not None:
-                # the child has exited before the timeout
+                # The child has exited before the timeout
                 break
         except subprocess.TimeoutExpired:
+            # The child did not exit.  Not a problem.
             pass
         now = datetime.utcnow()
     else:
-        sherprint("Timeout reached... killing child.", color=bcolor.FAIL)
+        # We've reached the killtime.
+        cprint("Timeout reached... killing child.", severity=Severity.FAIL)
         child.kill()
 
+    # Wait for the child to exit if it hasn't already.
     return_code = child.wait()
+    # Log the return code of the child.
     if return_code == 0:
-        sherprint(f"Child has exited with: {return_code}")
+        cprint(f"Child has exited with: {return_code}", severity=Severity.GOOD)
     else:
-        sherprint(f"Child has exited with: {return_code}", color=bcolor.FAIL)
+        cprint(f"Child has exited with: {return_code}", severity=Severity.FAIL)
 
-    sys.exit(return_code)
+    # Return the child's return code as our own so that it can be acted upon.
+    return return_code
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
