@@ -6,7 +6,7 @@
 [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/cisagov/travis-wait-improved.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/cisagov/travis-wait-improved/context:python)
 [![Known Vulnerabilities](https://snyk.io/test/github/cisagov/travis-wait-improved/develop/badge.svg)](https://snyk.io/test/github/cisagov/travis-wait-improved)
 
-`traivs-wait-improved` is a tool to prevent Travis-CI from thinking a
+`travis-wait-improved` is a tool to prevent Travis-CI from thinking a
 long-running process has stalled.  It will start a child process,
 and pass its output through along with keep-alive messages.
 
