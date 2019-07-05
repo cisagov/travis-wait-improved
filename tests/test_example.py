@@ -66,30 +66,3 @@ def test_log_levels(level):
                 logging.root.hasHandlers() is True
             ), "root logger should now have a handler"
             assert return_code == 0, "main() should return success (0)"
-
-
-@pytest.mark.parametrize("dividend, divisor, quotient", div_params)
-def test_division(dividend, divisor, quotient):
-    """Verify division results."""
-    result = example.example_div(dividend, divisor)
-    assert result == quotient, "result should equal quotient"
-
-
-@pytest.mark.slow
-def test_slow_division():
-    """Example of using a custom marker.
-
-    This test will only be run if --runslow is passed to pytest.
-    Look in conftest.py to see how this is implemented.
-    """
-    import time
-
-    result = example.example_div(256, 16)
-    time.sleep(4)
-    assert result == 16, "result should equal be 16"
-
-
-def test_zero_division():
-    """Verify that division by zero throws the correct exception."""
-    with pytest.raises(ZeroDivisionError):
-        example.example_div(1, 0)

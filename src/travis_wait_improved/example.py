@@ -14,25 +14,11 @@ Options:
 """
 
 import logging
-import os
 import sys
 
 import docopt
-import pkg_resources
 
 from ._version import __version__
-
-DEFAULT_ECHO_MESSAGE = "Hello World from the example default!"
-
-
-def example_div(x, y):
-    """Print some logging messages."""
-    logging.debug("This is a debug message")
-    logging.info("This is an info message")
-    logging.warning("This is a warning message")
-    logging.error("This is an error message")
-    logging.critical("This is a critical message")
-    return x / y
 
 
 def main():
@@ -50,20 +36,6 @@ def main():
             "are debug, info, warning, and error."
         )
         return 1
-
-    print(f"8 / 2 == {example_div(8, 2)}")
-
-    # Access some data from an environment variable
-    message = os.getenv("ECHO_MESSAGE", DEFAULT_ECHO_MESSAGE)
-    print(f'ECHO_MESSAGE="{message}"')
-
-    # Access some data from our package data (see the setup.py)
-    secret_message = (
-        pkg_resources.resource_string("example", "data/secret.txt")
-        .decode("utf-8")
-        .strip()
-    )
-    print(f'Secret="{secret_message}"')
 
     # Stop logging and clean up
     logging.shutdown()
