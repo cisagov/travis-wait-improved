@@ -29,10 +29,10 @@ def package_vars(version_file):
 
 
 setup(
-    name="example",
+    name="travis-wait-improved",
     # Versions should comply with PEP440
-    version=package_vars("src/example/_version.py")["__version__"],
-    description="Example python library",
+    version=package_vars("src/travis_wait_improved/_version.py")["__version__"],
+    description="A tool to help long-running, yet reticent, processes avoid dead at the hands of Traivs-CI.",
     long_description=readme(),
     long_description_content_type="text/markdown",
     # NCATS "homepage"
@@ -64,11 +64,12 @@ setup(
     keywords="skeleton",
     packages=find_packages(where="src"),
     package_dir={"": "src"},
-    package_data={"example": ["data/*.txt"]},
     py_modules=[splitext(basename(path))[0] for path in glob("src/*.py")],
     include_package_data=True,
-    install_requires=["docopt", "setuptools"],
+    install_requires=["docopt", "termcolor"],
     extras_require={"test": ["pre-commit", "pytest", "pytest-cov", "coveralls"]},
     # Conveniently allows one to run the CLI tool as `example`
-    entry_points={"console_scripts": ["example = example.example:main"]},
+    entry_points={
+        "console_scripts": ["travis_wait_improved = travis_wait_improved.sherpa:main"]
+    },
 )
