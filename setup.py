@@ -1,5 +1,5 @@
 """
-This is the setup module for the example project.
+This is the setup module for the travis-wait-improved tool.
 
 Based on:
 
