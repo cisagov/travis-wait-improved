@@ -14,9 +14,9 @@ For example, if you wanted to run a packer build that could take up
 to 30 minutes, you would add the following to your `.travis.yml` file:
 
 ```yml
-install:
+before_deploy:
   - pip install travis-wait-improved
-...
+
 deploy:
   - provider: script
     script: travis-wait-improved --timeout 30m packer build packer.json
