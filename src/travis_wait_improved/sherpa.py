@@ -7,8 +7,8 @@ Travis will assume it has stalled, and kill it.  Some tools (like Packer)
 can easily go beyond this 10 minute mark without writing to stdout.
 
 Usage:
-  travis_wait_improved [--timeout=<time>] <command>...
-  travis_wait_improved (-h | --help)
+  travis-wait-improved [--timeout=<time>] <command>...
+  travis-wait-improved (-h | --help)
 
 Options:
   -h --help             Show this message.
