@@ -15,6 +15,6 @@ install:
   - pip install --upgrade -r requirements-test.txt
 script:
   - pre-commit run --all-files
-  - pytest
+  - pytest --runslow
 after_success:
   - coveralls
