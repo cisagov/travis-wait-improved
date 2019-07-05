@@ -90,7 +90,7 @@ def calculate_sleep_time(remaining_delta):
 
 def main():
     """Start a child process, output status, and monitor exit."""
-    args = docopt.docopt(__doc__, version=__version__)
+    args = docopt.docopt(__doc__, options_first=True, version=__version__)
     command = " ".join(args["<command>"])
     timeout = parse_time(args["--timeout"])
 
