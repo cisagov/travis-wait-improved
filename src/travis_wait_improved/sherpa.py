@@ -114,7 +114,7 @@ def main():
         try:
             sleep_time = calculate_sleep_time(remaining_delta)
             # Sleep while waiting for the child to exit.
-            return_code = child.wait(sleep_time)
+            child.wait(sleep_time)
             # The child has exited before the timeout
             break
         except subprocess.TimeoutExpired:
