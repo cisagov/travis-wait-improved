@@ -5,6 +5,7 @@
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/cisagov/travis-wait-improved.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/cisagov/travis-wait-improved/alerts/)
 [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/cisagov/travis-wait-improved.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/cisagov/travis-wait-improved/context:python)
 [![Known Vulnerabilities](https://snyk.io/test/github/cisagov/travis-wait-improved/develop/badge.svg)](https://snyk.io/test/github/cisagov/travis-wait-improved)
+[![PyPI](https://img.shields.io/pypi/v/travis-wait-improved.svg)](https://pypi.org/project/travis-wait-improved/)
 
 `travis-wait-improved` is a tool to prevent Travis-CI from thinking a
 long-running process has stalled.  It will start a child process,
