@@ -1,17 +1,20 @@
 #!/usr/bin/env pytest -vs
 """Tests for travis_wait_improved."""
 
+# Standard Python Libraries
 import os
 import sys
 from unittest.mock import patch
 
+# Third-Party Libraries
 import pytest
 
+# cisagov Libraries
 import travis_wait_improved
 from travis_wait_improved import sherpa
 
 # define sources of version strings
-TRAVIS_TAG = os.getenv("TRAVIS_TAG")
+RELEASE_TAG = os.getenv("RELEASE_TAG")
 PROJECT_VERSION = travis_wait_improved.__version__
 
 
@@ -27,13 +30,13 @@ def test_stdout_version(capsys):
 
 
 @pytest.mark.skipif(
-    TRAVIS_TAG in [None, ""], reason="this is not a release (TRAVIS_TAG not set)"
+    RELEASE_TAG in [None, ""], reason="this is not a release (RELEASE_TAG not set)"
 )
 def test_release_version():
     """Verify that release tag version agrees with the module version."""
     assert (
-        TRAVIS_TAG == f"v{PROJECT_VERSION}"
-    ), "TRAVIS_TAG does not match the project version"
+        RELEASE_TAG == f"v{PROJECT_VERSION}"
+    ), "RELEASE_TAG does not match the project version"
 
 
 def test_child_timeout_kill(capsys):
