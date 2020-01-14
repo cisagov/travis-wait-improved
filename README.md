@@ -23,6 +23,10 @@ deploy:
     script: travis-wait-improved --timeout 30m packer build packer.json
 ```
 
+## Requirements ##
+
+Python versions 3.6 and above.  Note that Python 2 *is not* supported.
+
 ## Contributing ##
 
 We welcome contributions!  Please see [here](CONTRIBUTING.md) for

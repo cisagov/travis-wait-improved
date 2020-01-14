@@ -82,6 +82,7 @@ setup(
             "pytest",
         ]
     },
+    python_requires=">=3.6",
     # Conveniently allows one to run the CLI tool as `example`
     entry_points={
         "console_scripts": ["travis-wait-improved = travis_wait_improved.sherpa:main"]
