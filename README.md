@@ -1,6 +1,6 @@
 # travis-wait-improved 👷🏻‍⏲👍 #
 
-[![Build Status](https://travis-ci.com/cisagov/travis-wait-improved.svg?branch=develop)](https://travis-ci.com/cisagov/travis-wait-improved)
+[![GitHub Build Status](https://github.com/cisagov/travis-wait-improved/workflows/build/badge.svg)](https://github.com/cisagov/travis-wait-improved/actions)
 [![Coverage Status](https://coveralls.io/repos/github/cisagov/travis-wait-improved/badge.svg?branch=develop)](https://coveralls.io/github/cisagov/travis-wait-improved?branch=develop)
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/cisagov/travis-wait-improved.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/cisagov/travis-wait-improved/alerts/)
 [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/cisagov/travis-wait-improved.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/cisagov/travis-wait-improved/context:python)
