@@ -94,7 +94,7 @@ jobs:
           name: dist
           path: dist
       - name: Publish package
-        if: github.event_name == 'push' && \
+        if: github.event_name == 'push' &&
           startsWith(github.event.ref, 'refs/tags')
         uses: pypa/gh-action-pypi-publish@master
         with:
