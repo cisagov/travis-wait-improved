@@ -16,11 +16,13 @@ Options:
                         in minutes (m) or seconds (s) [default: 20m].
 """
 
+# Standard Python Libraries
 from datetime import datetime, timedelta
 from enum import Enum, auto
 import subprocess  # nosec
 import sys
 
+# Third-Party Libraries
 import docopt
 from termcolor import colored
 
